@@ -1,12 +1,12 @@
 import { FastifyInstance, FastifyPluginCallback } from 'fastify';
 import { HTTPMethod, RoutePluginOptions } from '../../../interface';
 import { Router } from '../../../utilities';
+import { createAdmin } from './create';
 
 
 enum AdminPath
 {
-    USER = '/user/:id',
-    CREATE_ADMIN = '/create'
+    CREATE_ADMIN = '/admin'
 }
 
 const AdminRoutes : FastifyPluginCallback<RoutePluginOptions> = (
@@ -21,11 +21,6 @@ const AdminRoutes : FastifyPluginCallback<RoutePluginOptions> = (
     const router = new Router(server);
 
     router.add([
-        {
-            method  : HTTPMethod.GET,
-            url     : AdminPath.USER,
-            handler : user(actors)
-        },
         {
             method  : HTTPMethod.POST,
             url     : AdminPath.CREATE_ADMIN,

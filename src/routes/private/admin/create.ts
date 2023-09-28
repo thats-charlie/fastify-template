@@ -3,7 +3,10 @@ import Actors from '../../../actors';
 
 export type PostRequest = FastifyRequest<{ 
     Body : {
-        
+        firstName: string;
+        lastName: string;
+        email: string;
+        password: string;
     }
 }>;
 
@@ -16,9 +19,14 @@ export const createAdmin = (
 {
     return async (request : PostRequest, reply : FastifyReply) => 
     {
-        const { id } = request.params;
+        const { 
+            firstName,
+            lastName,
+            email,
+            password
+        } = request.body;
 
-        const user = await actors.admin.getUser(id);
+        const user = await actors.admin.createAdmin(firstName, lastName, email, password);
 
         if (user)
         {
@@ -28,7 +36,7 @@ export const createAdmin = (
         else
         {
             reply.code(404);
-            reply.send(`Unable to find user with uuid: ${id}`)
+            reply.send(`Unable to create admin`)
         }
         
         return;
